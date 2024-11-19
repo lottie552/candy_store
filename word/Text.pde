@@ -7,7 +7,7 @@ class text {
         txtFileName= txt;
         
         for(int i = 0; i< letters.length; i++) {
-      letters[i] = new Letter (myWord.charAt(i), random(20, width-20), random(20,height-20));
+    letters[i] = new Letter (myWord.charAt(i), random(20, width-20), random(20,height-20));
     }
     }
 
