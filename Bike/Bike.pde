@@ -1,24 +1,25 @@
 class Bike {
-  float wheelSize = 30;
-  Position bikePos;
-  Position frontWheelPos;
-  Position backWheelPos;
+  float scale; // Scale factor to determine the size of the bike
+  PVector bikePos;
+  PVector frontWheelPos;
+  PVector backWheelPos;
 
   Wheel frontWheel;
   Wheel backWheel;
 
-
-  Bike(Position pB) {
+  Bike(PVector pB, float scale) {
+    this.scale = scale; // Assign scale
     bikePos = pB;
-    // Calculate the frontwheel position.
-    frontWheelPos = new Position((bikePos.x + wheelSize * 3.6), (bikePos.y + (wheelSize) + 15));
-    // Calculate the backwheel position.
-    backWheelPos = new Position((bikePos.x + wheelSize / 2), (bikePos.y + (wheelSize) + 15));
 
-    // Create the wheels.
-    frontWheel  = new Wheel(frontWheelPos, wheelSize);
-    backWheel  = new Wheel(backWheelPos, wheelSize);
-    // Add the hotspots for the wheels for animations to start on mouseclicked.
+    // Calculate wheel positions relative to scale
+    frontWheelPos = new PVector(bikePos.x + scale * 3.6, bikePos.y + scale + scale * 0.5);
+    backWheelPos = new PVector(bikePos.x + scale / 2, bikePos.y + scale + scale * 0.5);
+
+    // Create the wheels
+    frontWheel = new Wheel(frontWheelPos, scale);
+    backWheel = new Wheel(backWheelPos, scale);
+
+    // Add hotspots for wheels
     hotspots.add(frontWheel);
     hotspots.add(backWheel);
   }
@@ -26,26 +27,32 @@ class Bike {
   void display() {
     frontWheel.display();
     backWheel.display();
-    // Set draw color, strokeWeight and nofill() for drawing the frame.
 
     noFill();
-    strokeWeight(4);
+    strokeWeight(scale / 7.5); // Adjust stroke weight relative to scale
     stroke(0);
-    line(backWheelPos.x + wheelSize - 3, bikePos.y - 1, backWheelPos.x + 1.6 * wheelSize, backWheelPos.y);
-    line(backWheelPos.x + wheelSize * 2.6, bikePos.y + 5, backWheelPos.x + wheelSize * 2.6 + 5, bikePos.y - 5);
-    line(backWheelPos.x + wheelSize * 2.6 - 5, bikePos.y - 5, backWheelPos.x + wheelSize * 2.6 + 5, bikePos.y - 5);
+
+    // Frame lines
+    line(backWheelPos.x + scale - 3, bikePos.y - 1, backWheelPos.x + 1.6 * scale, backWheelPos.y);
+    line(backWheelPos.x + scale * 2.6, bikePos.y + scale / 10, backWheelPos.x + scale * 2.6 + scale / 10, bikePos.y - scale / 10);
+    line(backWheelPos.x + scale * 2.6 - scale / 10, bikePos.y - scale / 10, backWheelPos.x + scale * 2.6 + scale / 10, bikePos.y - scale / 10);
+
     stroke(#ff0000);
-    triangle(backWheelPos.x, backWheelPos.y, backWheelPos.x + 1.6 * wheelSize, backWheelPos.y, backWheelPos.x + wheelSize, bikePos.y + 5);
-    triangle(backWheelPos.x + 1.6 * wheelSize, backWheelPos.y, backWheelPos.x + wheelSize, bikePos.y + 5, backWheelPos.x + wheelSize * 2.6, bikePos.y + 5);
-    line(backWheelPos.x + wheelSize * 2.6, bikePos.y + 5, frontWheelPos.x, frontWheelPos.y);
+    // Frame triangles
+    triangle(backWheelPos.x, backWheelPos.y, backWheelPos.x + 1.6 * scale, backWheelPos.y, backWheelPos.x + scale, bikePos.y + scale / 10);
+    triangle(backWheelPos.x + 1.6 * scale, backWheelPos.y, backWheelPos.x + scale, bikePos.y + scale / 10, backWheelPos.x + scale * 2.6, bikePos.y + scale / 10);
+
+    // Handlebar line
+    line(backWheelPos.x + scale * 2.6, bikePos.y + scale / 10, frontWheelPos.x, frontWheelPos.y);
 
     fill(0);
     noStroke();
     rectMode(CENTER);
-    rect(backWheelPos.x + wheelSize - 3, bikePos.y - 4, 20, 5);
+    // Seat rectangle
+    rect(backWheelPos.x + scale - 3, bikePos.y - scale / 4, scale * 2 / 5, scale / 10);
     rectMode(CORNER);
 
-    //reset strokeWeight to 1.
+    // Reset stroke weight
     strokeWeight(1);
   }
 }

@@ -1,33 +1,32 @@
-// Wheel can animate, so extend CanAnimate class
 class Wheel extends CanAnimate {
-  Position weelPos;
+  PVector weelPos;
   float radius;
   float rotation = 0.01;
 
-
-  Wheel(Position wP, float r) {
+  Wheel(PVector wP, float scale) {
     weelPos = wP;
-    radius = r;
+    radius = scale; // Radius proportional to the bike's scale
   }
 
   void display() {
     ellipseMode(RADIUS);
 
     if (doAnimate) {
-      rotation = rotation + 0.0175; // aproximate 1 degree
-      if (rotation >= 0.35) { // aproximate 20 degrees so the next spoke...
-        rotation= 0;
+      rotation += 0.0175; // Approximate 1 degree
+      if (rotation >= 0.35) { // Reset after ~20 degrees
+        rotation = 0;
       }
     }
-    // Set draw color, strokeWeight and nofill() for drawing the weel.
+
+    // Draw wheel
     stroke(0);
     noFill();
-    strokeWeight(4);
+    strokeWeight(radius / 7.5); // Adjust stroke weight relative to radius
     circle(weelPos.x, weelPos.y, radius);
-    //reset strokeWeight to 1 for drawing the spokes.
+
+    // Draw spokes
     strokeWeight(1);
-    // draw the spokes.
-    for (int i = 0; i < 360; i = i + 20) {
+    for (int i = 0; i < 360; i += 20) {
       float angle = radians(i);
       float x = weelPos.x + radius * sin(angle - rotation);
       float y = weelPos.y + radius * cos(angle - rotation);
@@ -35,10 +34,9 @@ class Wheel extends CanAnimate {
     }
   }
 
-  //Give the actual Area of this object instead of the area of the CanAnimate class.
   Area getArea() {
-    Position ul = new Position(weelPos.x - radius, weelPos.y - radius);
-    Position lr = new Position(weelPos.x + radius, weelPos.y + radius);
-    return new Area(ul, lr);
+    PVector ul = new PVector(weelPos.x - radius, weelPos.y - radius);
+    PVector lr = new PVector(weelPos.x + radius, weelPos.y + radius);
+    return new Area(ul, lr); // Update Area if necessary to use PVector
   }
 }
