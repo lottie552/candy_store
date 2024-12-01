@@ -1,13 +1,13 @@
 class Area {
-  Position upperLeftCorner, lowerRightCorner;
+  PVector upperLeftCorner, lowerRightCorner;
 
-  Area(Position upperLC, Position lowerRC) {
+  Area(PVector upperLC, PVector lowerRC) {
     upperLeftCorner = upperLC;
     lowerRightCorner = lowerRC;
   }
 
-  //function to calculate if the given Position is in the Area rectangle.
-  boolean isInArea(Position pos) {
-    return(pos.x >= upperLeftCorner.x && pos.x <= lowerRightCorner.x && pos.y >= upperLeftCorner.y && pos.y <= lowerRightCorner.y);
+  // Function to calculate if the given PVector is in the Area rectangle.
+  boolean isInArea(PVector pos) {
+    return (pos.x >= upperLeftCorner.x && pos.x <= lowerRightCorner.x && pos.y >= upperLeftCorner.y && pos.y <= lowerRightCorner.y);
   }
 }

@@ -1,14 +1,13 @@
 // Word class for handling words and their animations
 class Word {
   String myWord;
-  float xPosition, yPosition;
+  PVector position; // Using PVector for position
   float angle;
   Letter[] letters;
   
   Word(String word, float xPosition, float yPosition) {
     myWord = word;
-    this.xPosition = xPosition;
-    this.yPosition = yPosition;
+    position = new PVector(xPosition, yPosition); // Initialize position with PVector
     angle = random(2 * PI);
     letters = new Letter[myWord.length()];
     
@@ -22,7 +21,7 @@ class Word {
   
   void drawWord() {
     pushMatrix();
-    translate(xPosition, yPosition);
+    translate(position.x, position.y); // Use PVector for position
     rotate(angle);
     fill(200, 10, 200);
     textSize(35);
@@ -33,7 +32,7 @@ class Word {
   
   void drawLetters() {
     for (Letter l : letters) {
-      l.drawLetter();
+      l.drawLetter(); // Draw each letter of the word
     }
   }
 }

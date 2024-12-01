@@ -1,11 +1,14 @@
-// Derived class for splitting lines into words
-class WordLoader extends TextLoader {
+// Base class for loading a text file
+class TextLoader {
+  String[] lines; // Store lines of the file
   
-  // Override the processContent method
-  @Override
+  // Load the file
+  void loadFile(String filename) {
+    lines = loadStrings(filename);
+  }
+  
+  // Placeholder method to process content (to be overridden)
   String[] processContent() {
-    // Join lines and split into words
-    String fullText = join(lines, " ");
-    return splitTokens(fullText, " ,.!?;:()[]\"'\n\t"); // Delimiters for splitting words
+    return lines; // Default implementation returns raw lines
   }
 }

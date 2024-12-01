@@ -14,7 +14,7 @@ void setup() {
   for (int i = 0; i < loadedWords.length; i++) {
     float x = random(50, width - 50);
     float y = random(50, height - 50);
-    words[i] = new Word(loadedWords[i], x, y);
+    words[i] = new Word(loadedWords[i], x, y);  // Use PVector for positions
   }
 
   state = 0;  // Initial state
@@ -26,12 +26,12 @@ void draw() {
   switch (state) {  // Switch between states
     case 0:
       for (Word w : words) {
-        w.drawWord();
+        w.drawWord();  // Draw the word as a whole
       }
       break;
     case 1:
       for (Word w : words) {
-        w.drawLetters();
+        w.drawLetters();  // Draw individual letters
       }
       break;
   }

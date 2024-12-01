@@ -8,6 +8,6 @@ class Background {
   }
 
   void display() {
-    //background display
+    // Background display logic (currently empty)
   }
 }
