@@ -5,7 +5,7 @@ class Word {
   float angle;
   Letter[] letters;
   
-  Word(String word, float xPosition, float yPosition) {
+  Word(String word, PVector position) {
     myWord = word;
     position = new PVector(xPosition, yPosition); // Initialize position with PVector
     angle = random(2 * PI);
@@ -13,9 +13,8 @@ class Word {
     
     // Split the word into individual letters
     for (int i = 0; i < letters.length; i++) {
-      float letterX = random(20, width - 20);
-      float letterY = random(20, height - 20);
-      letters[i] = new Letter(myWord.charAt(i), letterX, letterY);
+      PVector letterPosition = new PVector(random(20, width - 20), random(20, height - 20)); // Random positions for letters
+      letters[i] = new Letter(myWord.charAt(i), letterPosition);
     }
   }
   
