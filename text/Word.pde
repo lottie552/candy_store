@@ -1,37 +1,26 @@
-// Word class for handling words and their animations
 class Word {
-  String myWord;
-  PVector position; // Using PVector for the word's position
-  float angle;
-  Letter[] letters;
-  
-  Word(String word, PVector position) {
-    myWord = word;
+  String wordText;
+  PVector position; // Using PVector for position
+
+  Word(String wordText, PVector position) {
+    this.wordText = wordText;
     this.position = position; // Set position as PVector
-    angle = random(2 * PI);
-    letters = new Letter[myWord.length()];
-    
-    // Split the word into individual letters
-    for (int i = 0; i < letters.length; i++) {
-      PVector letterPosition = new PVector(random(20, width - 20), random(20, height - 20)); // Random positions for letters
-      letters[i] = new Letter(myWord.charAt(i), letterPosition);
-    }
   }
-  
+
   void drawWord() {
-    pushMatrix();
-    translate(position.x, position.y); // Use PVector x and y
-    rotate(angle);
-    fill(200, 10, 200);
-    textSize(35);
-    textAlign(CENTER);
-    text(myWord, 0, 0);
-    popMatrix();
+    fill(0);
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    text(wordText, position.x, position.y); // Use position.x and position.y
   }
-  
+
   void drawLetters() {
-    for (Letter l : letters) {
-      l.drawLetter();
+    fill(255, 0, 0); // Red color for letters in this state
+    textSize(32);
+    textAlign(CENTER, CENTER);
+    for (int i = 0; i < wordText.length(); i++) {
+      float xOffset = i * 20 - wordText.length() * 10; // Adjust letter spacing
+      text(wordText.charAt(i), position.x + xOffset, position.y); // Draw each letter at an offset position
     }
   }
 }
