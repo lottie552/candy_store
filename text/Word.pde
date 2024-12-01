@@ -1,4 +1,3 @@
-// Word class for handling words and their animations
 class Word {
   String myWord;
   PVector position; // Using PVector for position
@@ -17,7 +16,7 @@ class Word {
       letters[i] = new Letter(myWord.charAt(i), letterPosition);
     }
   }
-  
+
   void drawWord() {
     pushMatrix();
     translate(position.x, position.y); // Use PVector for position
@@ -28,7 +27,7 @@ class Word {
     text(myWord, 0, 0);
     popMatrix();
   }
-  
+
   void drawLetters() {
     for (Letter l : letters) {
       l.drawLetter(); // Draw each letter of the word
