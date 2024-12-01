@@ -1,7 +1,6 @@
-// Letter class for individual letter animations
 class Letter {
   char myLetter;
-  PVector position; // Using PVector for position
+  PVector position; // Using PVector for letter position
   float angle;
   color letterColor;
 
