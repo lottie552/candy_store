@@ -12,9 +12,8 @@ void setup() {
   // Initialize Word objects with random positions
   words = new Word[loadedWords.length];
   for (int i = 0; i < loadedWords.length; i++) {
-    float x = random(50, width - 50);
-    float y = random(50, height - 50);
-    words[i] = new Word(loadedWords[i], x, y);
+    PVector position = new PVector(random(50, width - 50), random(50, height - 50)); // Using PVector for position
+    words[i] = new Word(loadedWords[i], position);
   }
 
   state = 0;  // Initial state

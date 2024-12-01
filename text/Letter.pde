@@ -1,21 +1,20 @@
 // Letter class for individual letter animations
 class Letter {
   char myLetter;
-  float xPosition, yPosition;
+  PVector position; // Using PVector for position
   float angle;
   color letterColor;
 
   Letter(char letter, float xPosition, float yPosition) {
     myLetter = letter;
-    this.xPosition = xPosition;
-    this.yPosition = yPosition;
+    position = new PVector(xPosition, yPosition); // Initialize position as a PVector
     angle = random(2 * PI);
     letterColor = color(int(random(150, 250)), int(random(50)), int(random(150, 200)));
   }
 
   void drawLetter() {
     pushMatrix();
-    translate(xPosition, yPosition);
+    translate(position.x, position.y); // Use PVector x and y
     rotate(angle);
     fill(letterColor);
     textSize(40);
