@@ -1,0 +1,21 @@
+Dependency Notes:
+
+All files require Area.pde
+
+Both Clickable.pde and Draggable.pde require CanAnimate.pde
+
+When using either class, include in your main sketch:
+
+java
+ArrayList<CanAnimate> hotspots = new ArrayList<CanAnimate>();
+
+void mousePressed() {
+  for (CanAnimate obj : hotspots) {
+    if (obj instanceof Draggable) {
+      ((Draggable)obj).startDragging(new PVector(mouseX, mouseY));
+    }
+    if (obj instanceof Clickable && obj.getArea().isInArea(new PVector(mouseX, mouseY))) {
+      ((Clickable)obj).handleClick();
+    }
+  }
+}
