@@ -1,15 +1,3 @@
-/**
-  UTILITY CLASS: Area
-  UNIVERSAL REQUIREMENT: Used by ALL CanAnimate subclasses
-  
-  KEY FUNCTIONS:
-  - isInArea(): Checks if point is within bounds
-  - Two constructors: corner-based or center+dimensions
-  
-  WARNING: All coordinates are SCREEN SPACE (origin top-left)
-  
-  DEBUG TIP: Draw the Area in display() to visualize click regions
- */
 class Area {
   PVector upperLeftCorner, lowerRightCorner;
 

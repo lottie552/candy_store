@@ -1,0 +1,16 @@
+CORE WORKFLOW WHEN REUSING THESE CLASSES:
+1. ALWAYS include CanAnimate.pde and Area.pde
+2. Add Clickable.pde/Draggable.pde as needed
+3. In subclasses:
+   - Implement getArea() FIRST before other methods
+   - Make Areas slightly larger than visuals for usability
+4. In main sketch:
+   - Use instanceof checks for Clickable/Draggable
+   - Call handleClick()/drag methods in mouse handlers
+
+TROUBLESHOOTING:
+Q: Why isn't clicking/dragging working?
+A: 99% of issues are from:
+   - Forgetting to implement getArea()
+   - Incorrect Area coordinates
+   - Missing instanceof checks in mouse handlers

@@ -1,5 +1,6 @@
-// A CanAnimate class that must be extended by all classes that can do animations. So starting and
-// stopping animations can be done within 1 mouseClicked() function.
+/**A CanAnimate class that must be extended by all classes that can do animations. So starting and
+stopping animations can be done within 1 mouseClicked() function.
+*/ 
 class CanAnimate {
   // Start or stop animations depending on this value
   boolean doAnimate = false;

@@ -1,12 +1,13 @@
-Dependency Notes:
+/**Dependency Notes:
 
 All files require Area.pde
 
 Both Clickable.pde and Draggable.pde require CanAnimate.pde
 
 When using either class, include in your main sketch:
+*/
 
-java
+
 ArrayList<CanAnimate> hotspots = new ArrayList<CanAnimate>();
 
 void mousePressed() {
