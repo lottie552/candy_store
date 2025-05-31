@@ -17,7 +17,7 @@
   - Automatic drag offset calculation
   - Position constraint helpers
  */
-abstract class Draggable extends CanAnimate {
+abstract class Draggable implements CanAnimate {
   protected boolean isDragging = false;
   protected PVector dragOffset;
   

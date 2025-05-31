@@ -6,7 +6,7 @@ class RandomColorPicker {
   // Constructor to initialize with predefined colors
   RandomColorPicker() {
     colors = new color[5];          // Adjust the size of the array if you want more colors
-    colors[0] = color(123, 29, 0);  // Add more colors as needed by assigning them to new indices
+    colors[0] = color( #FF9EB5);  // Add more colors as needed by assigning them to new indices
     colors[1] = color(207, 162, 65);
     colors[2] = color(207, 162, 65);
     colors[3] = color(207, 162, 65);
