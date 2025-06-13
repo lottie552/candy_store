@@ -1,0 +1,169 @@
+// File: c:\Users\lotte\OneDrive\Documenten\Processing\my programs\candy_store\CanAnimate\Area.pde
+/**
+  UTILITY CLASS: Area
+  UNIVERSAL REQUIREMENT: Used by ALL CanAnimate subclasses
+  
+  KEY FUNCTIONS:
+  - isInArea(): Checks if point is within bounds
+  - Two constructors: corner-based or center+dimensions
+  
+  WARNING: All coordinates are SCREEN SPACE (origin top-left)
+  
+  DEBUG TIP: Draw the Area in display() to visualize click regions
+ */
+class Area {
+  PVector upperLeftCorner, lowerRightCorner;
+
+  Area(PVector upperLC, PVector lowerRC) {
+    upperLeftCorner = upperLC;
+    lowerRightCorner = lowerRC;
+  }
+
+  // Function to calculate if the given PVector is in the Area rectangle.
+  boolean isInArea(PVector pos) {
+    return (pos.x >= upperLeftCorner.x && pos.x <= lowerRightCorner.x && pos.y >= upperLeftCorner.y && pos.y <= lowerRightCorner.y);
+  }
+}
+
+
+// File: c:\Users\lotte\OneDrive\Documenten\Processing\my programs\candy_store\CanAnimate\CanAnimate.pde
+/**
+ * INTERFACE: CanAnimate
+ * 
+ * CORE REQUIREMENTS FOR ALL IMPLEMENTING CLASSES:
+ * 1. Must implement getArea() - defines interaction region
+ * 2. Must implement update() - handles state changes
+ * 3. Must implement display() - handles visual rendering
+ * 
+ * NOTE: Even non-interactive elements must implement getArea()
+ *       (return a zero-size Area if not interactive)
+ */
+interface CanAnimate {
+  void update();
+  void display();
+  Area getArea();
+}
+
+
+// File: c:\Users\lotte\OneDrive\Documenten\Processing\my programs\candy_store\CanAnimate\canAnimateMain.pde
+/**Dependency Notes:
+
+All files require Area.pde
+
+Both Clickable.pde and Draggable.pde require CanAnimate.pde
+
+When using either class, include in your main sketch:
+*/
+
+
+ArrayList<CanAnimate> hotspots = new ArrayList<CanAnimate>();
+
+void mousePressed() {
+  for (CanAnimate obj : hotspots) {
+    if (obj instanceof Draggable) {
+      ((Draggable)obj).startDragging(new PVector(mouseX, mouseY));
+    }
+    if (obj instanceof Clickable && obj.getArea().isInArea(new PVector(mouseX, mouseY))) {
+      ((Clickable)obj).handleClick();
+    }
+  }
+}
+
+
+// File: c:\Users\lotte\OneDrive\Documenten\Processing\my programs\candy_store\CanAnimate\Clickable.pde
+/**
+ * ABSTRACT CLASS: Clickable
+ * REQUIRES: CanAnimate.pde, Area.pde
+ * 
+ * IMPLEMENTATION MANDATES:
+ * 1. getArea() must return click-sensitive region
+ * 2. Use isClicked for visual state toggling
+ * 3. Call handleClick() in mousePressed()
+ * 
+ * EXAMPLE USAGE:
+ * class MyButton extends Clickable {
+ *   Area getArea() {
+ *     return new Area(position, 50, 50); // Clickable 50x50 area
+ *   }
+ *   // ... implement update() and display() ...
+ * }
+ */
+abstract class Clickable implements CanAnimate {
+  boolean isClicked = false;
+  
+  void handleClick() {
+    isClicked = !isClicked;
+  }
+  // Required implementations
+  abstract void update();
+  abstract void display();
+  abstract Area getArea();
+}
+
+// File: c:\Users\lotte\OneDrive\Documenten\Processing\my programs\candy_store\CanAnimate\Dragable.pde
+/**
+  ABSTRACT CLASS: Draggable
+  Purpose: Objects with drag-and-drop functionality
+  Requires: CanAnimate.pde, Area.pde
+  
+  Implementation:
+  1. Extend and implement:
+    - update(), display(), getArea()
+    - getPosition(), setPosition()
+  2. Add to hotspots ArrayList<CanAnimate>
+  3. In mouse handlers:
+    - mousePressed(): Call startDragging()
+    - mouseDragged(): Call updateDrag()
+    - mouseReleased(): Call stopDragging()
+  
+  Features:
+  - Automatic drag offset calculation
+  - Position constraint helpers
+ */
+abstract class Draggable implements CanAnimate {
+  protected boolean isDragging = false;
+  protected PVector dragOffset;
+  
+  void startDragging(PVector mousePos) {
+    if (getArea().isInArea(mousePos)) {
+      isDragging = true;
+      dragOffset = PVector.sub(getPosition(), mousePos);
+    }
+  }
+  
+  void updateDrag(PVector mousePos) {
+    if (isDragging) {
+      setPosition(PVector.add(mousePos, dragOffset));
+    }
+  }
+  
+  void stopDragging() {
+    isDragging = false;
+  }
+  
+  // Required implementations
+  abstract PVector getPosition();
+  abstract void setPosition(PVector newPos);
+  abstract void update();
+  abstract void display();
+  abstract Area getArea();
+}
+
+// File: c:\Users\lotte\OneDrive\Documenten\Processing\my programs\candy_store\CanAnimate\IMPLEMENTATION_GUIDE.txt
+CORE WORKFLOW WHEN REUSING THESE CLASSES:
+1. ALWAYS include CanAnimate.pde and Area.pde
+2. Add Clickable.pde/Draggable.pde as needed
+3. In subclasses:
+   - Implement getArea() FIRST before other methods
+   - Make Areas slightly larger than visuals for usability
+4. In main sketch:
+   - Use instanceof checks for Clickable/Draggable
+   - Call handleClick()/drag methods in mouse handlers
+
+TROUBLESHOOTING:
+Q: Why isn't clicking/dragging working?
+A: 99% of issues are from:
+   - Forgetting to implement getArea()
+   - Incorrect Area coordinates
+   - Missing instanceof checks in mouse handlers
+
